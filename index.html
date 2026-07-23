@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curiosidades de São Paulo</title>
+    <!-- Importando fonte do Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* =========================================
+           CSS VARIABLES & RESET
+           ========================================= */
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #e74c3c;
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-main: #333333;
+            --text-muted: #666666;
+            --transition-speed: 0.3s;
+            --border-radius: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* =========================================
+           TYPOGRAPHY & HEADER
+           ========================================= */
+        h1, h2, h3 {
+            color: var(--primary-color);
+        }
+
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #1a252f 100%);
+            color: white;
+            text-align: center;
+            padding: 6rem 2rem;
+            clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+        }
+
+        .hero h1 {
+            color: white;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            letter-spacing: -1px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            font-weight: 300;
+            max-width: 600px;
+            margin: 0 auto;
+            color: #d1d8e0;
+        }
+
+        /* =========================================
+           LAYOUT & GRID (CARDS)
+           ========================================= */
+        .container {
+            max-width: 1200px;
+            margin: -3rem auto 4rem auto; /* Overlap the hero section slightly */
+            padding: 0 2rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+            opacity: 0; /* For JS Animation */
+            transform: translateY(20px); /* For JS Animation */
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .card h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background-color: var(--accent-color);
+            transition: width var(--transition-speed) ease;
+        }
+
+        .card:hover h3::after {
+            width: 80px;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* =========================================
+           UTILITIES & FOOTER
+           ========================================= */
+        .fade-in {
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background-color: var(--primary-color);
+            color: white;
+            font-size: 0.9rem;
+        }
+
+        footer span {
+            color: var(--accent-color);
+        }
+
+    </style>
+</head>
+<body>
+
+    <header class="hero">
+        <h1>Descubra São Paulo</h1>
+        <p>A selva de pedra esconde segredos fascinantes. Conheça as curiosidades que fazem de São Paulo uma das cidades mais singulares do mundo.</p>
+    </header>
+
+    <main class="container">
+        <section class="grid" id="curiosities-grid">
+            <!-- Os cards serão animados via JavaScript -->
+            <article class="card js-scroll">
+                <div class="card-icon">🍕</div>
+                <h3>A Capital da Pizza</h3>
+                <p>São Paulo é a segunda cidade que mais consome pizza no mundo, perdendo apenas para Nova York. Estima-se que mais de 1 milhão de pizzas são consumidas diariamente na capital paulista.</p>
+            </article>
+
+            <article class="card js-scroll">
+                <div class="card-icon">⛩️</div>
+                <h3>Pedaço do Japão</h3>
+                <p>O bairro da Liberdade abriga a maior comunidade japonesa fora do Japão. Hoje, o bairro também celebra as ricas culturas chinesa e coreana, sendo um polo gastronômico e cultural asiático.</p>
+            </article>
+
+            <article class="card js-scroll">
+                <div class="card-icon">🚁</div>
+                <h3>Céu Movimentado</h3>
+                <p>São Paulo possui a maior frota de helicópteros do mundo. Devido ao trânsito intenso e alta concentração de executivos, os céus da cidade registram centenas de voos diários.</p>
+            </article>
+
+            <article class="card js-scroll">
+                <div class="card-icon">🎨</div>
+                <h3>Museu a Céu Aberto</h3>
+                <p>A arte urbana paulistana é referência mundial. O Beco do Batman, na Vila Madalena, é uma galeria a céu aberto onde os grafites são constantemente renovados por artistas renomados.</p>
+            </article>
+
+            <article class="card js-scroll">
+                <div class="card-icon">☕</div>
+                <h3>Herança do Café</h3>
+                <p>O crescimento monumental da cidade no século XIX e início do século XX foi quase inteiramente financiado pela economia do café. Estações de trem como a da Luz foram erguidas para escoar o grão.</p>
+            </article>
+
+            <article class="card js-scroll">
+                <div class="card-icon">🚇</div>
+                <h3>Gigante Subterrâneo</h3>
+                <p>Apesar de a rede de metrô não ser a mais extensa, a estação Sé é impressionante: por ela circulam cerca de 600 mil pessoas todos os dias, tornando-a uma das mais movimentadas das Américas.</p>
+            </article>
+        </section>
+    </main>
+
+    <footer>
+        <p>Desenvolvido com <span>♥</span> por um Sênior Front-end Developer.</p>
+    </footer>
+
+    <!-- =========================================
+         JAVASCRIPT
+         ========================================= -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Seleciona todos os elementos que devem ser animados no scroll
+            const scrollElements = document.querySelectorAll('.js-scroll');
+
+            // Configuração do Intersection Observer
+            const observerOptions = {
+                root: null, // Observa a viewport
+                rootMargin: '0px',
+                threshold: 0.15 // Dispara quando 15% do elemento estiver visível
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        // Adiciona um pequeno delay baseado no índice para efeito de cascata (stagger)
+                        setTimeout(() => {
+                            entry.target.classList.add('fade-in');
+                        }, index * 100);
+                        
+                        // Para de observar o elemento após a animação acontecer uma vez
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            // Inicia a observação de cada card
+            scrollElements.forEach(el => observer.observe(el));
+        });
+    </script>
+</body>
+</html>

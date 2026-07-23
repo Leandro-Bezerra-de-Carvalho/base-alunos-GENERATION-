@@ -3,243 +3,369 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Curiosidades de São Paulo</title>
-    <!-- Importando fonte do Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
+    <meta name="description" content="Descubra as maiores curiosidades sobre a cidade de São Paulo.">
+    <title>Curiosidades de São Paulo | Experiência Premium</title>
+    <!-- Importação das fontes modernas -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    
     <style>
         /* =========================================
-           CSS VARIABLES & RESET
+           1. VARIÁVEIS CSS E TOKENS DE TEMA
            ========================================= */
         :root {
-            --primary-color: #2c3e50;
-            --accent-color: #e74c3c;
-            --bg-color: #f8f9fa;
-            --card-bg: #ffffff;
-            --text-main: #333333;
-            --text-muted: #666666;
-            --transition-speed: 0.3s;
-            --border-radius: 12px;
+            /* Tema Claro (Padrão) */
+            --bg-color: #f0f2f5;
+            --text-main: #1a1a1a;
+            --text-muted: #555555;
+            --card-bg: rgba(255, 255, 255, 0.7);
+            --card-border: rgba(255, 255, 255, 0.5);
+            --primary: #E63946; /* Vermelho SP */
+            --secondary: #1D3557;
+            --shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
+            --glass-blur: blur(12px);
+            --transition: 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        [data-theme="dark"] {
+            /* Tema Escuro */
+            --bg-color: #0f1115;
+            --text-main: #f1f1f1;
+            --text-muted: #a0a0a0;
+            --card-bg: rgba(30, 34, 42, 0.6);
+            --card-border: rgba(255, 255, 255, 0.05);
+            --primary: #FF4D5E;
+            --secondary: #F1FAEE;
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
         }
 
+        /* =========================================
+           2. RESET E ACESSIBILIDADE
+           ========================================= */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--bg-color);
             color: var(--text-main);
-            line-height: 1.6;
+            transition: background-color var(--transition), color var(--transition);
             overflow-x: hidden;
+            background-image: radial-gradient(circle at 15% 50%, rgba(230, 57, 70, 0.05), transparent 25%),
+                              radial-gradient(circle at 85% 30%, rgba(29, 53, 87, 0.05), transparent 25%);
+        }
+
+        /* Acessibilidade: Desativa animações se o usuário preferir */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
         }
 
         /* =========================================
-           TYPOGRAPHY & HEADER
+           3. CABEÇALHO E NAVEGAÇÃO
            ========================================= */
-        h1, h2, h3 {
-            color: var(--primary-color);
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
         }
 
+        .logo {
+            font-weight: 700;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--text-main);
+        }
+
+        .theme-toggle {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            color: var(--text-main);
+            padding: 0.75rem;
+            border-radius: 50%;
+            cursor: pointer;
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            font-size: 1.2rem;
+            transition: transform var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            outline: none;
+        }
+        
+        .theme-toggle:hover { 
+            transform: scale(1.1) rotate(15deg); 
+        }
+
+        /* =========================================
+           4. HERO SECTION (Topo)
+           ========================================= */
         .hero {
-            background: linear-gradient(135deg, var(--primary-color) 0%, #1a252f 100%);
-            color: white;
+            min-height: 70vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             text-align: center;
-            padding: 6rem 2rem;
-            clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+            padding: 0 2rem;
+            position: relative;
         }
 
         .hero h1 {
-            color: white;
-            font-size: 3rem;
+            font-family: 'Playfair Display', serif;
+            /* Tipografia fluida que se adapta ao tamanho da tela */
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            color: var(--text-main);
             margin-bottom: 1rem;
-            letter-spacing: -1px;
+            line-height: 1.1;
+        }
+
+        .hero h1 span {
+            color: var(--primary);
+            display: inline-block;
         }
 
         .hero p {
-            font-size: 1.2rem;
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            color: var(--text-muted);
+            max-width: 650px;
             font-weight: 300;
-            max-width: 600px;
-            margin: 0 auto;
-            color: #d1d8e0;
+            line-height: 1.6;
         }
 
         /* =========================================
-           LAYOUT & GRID (CARDS)
+           5. GRID DE CARDS (Glassmorphism)
            ========================================= */
         .container {
-            max-width: 1200px;
-            margin: -3rem auto 4rem auto; /* Overlap the hero section slightly */
+            max-width: 1300px;
+            margin: 0 auto 5rem auto;
             padding: 0 2rem;
-            position: relative;
-            z-index: 10;
         }
 
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
         }
 
         .card {
-            background-color: var(--card-bg);
-            border-radius: var(--border-radius);
-            padding: 2rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
-            opacity: 0; /* For JS Animation */
-            transform: translateY(20px); /* For JS Animation */
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: var(--shadow);
+            transform-style: preserve-3d;
+            transform: perspective(1000px);
+            opacity: 0; /* Inicia invisível para a animação do scroll */
+            transform: translateY(40px);
+            transition: opacity 0.8s ease, transform 0.8s ease, box-shadow var(--transition);
         }
 
-        .card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        .card.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .card-content {
+            transform: translateZ(30px); /* Dá o efeito de flutuação 3D */
+            transition: transform var(--transition);
         }
 
         .card-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
         }
 
         .card h3 {
-            font-size: 1.5rem;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.7rem;
             margin-bottom: 1rem;
-            position: relative;
-            padding-bottom: 0.5rem;
-        }
-
-        .card h3::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 40px;
-            height: 3px;
-            background-color: var(--accent-color);
-            transition: width var(--transition-speed) ease;
-        }
-
-        .card:hover h3::after {
-            width: 80px;
+            color: var(--text-main);
         }
 
         .card p {
             color: var(--text-muted);
-            font-size: 0.95rem;
+            line-height: 1.7;
+            font-size: 1.05rem;
         }
 
         /* =========================================
-           UTILITIES & FOOTER
+           6. FOOTER
            ========================================= */
-        .fade-in {
-            animation: fadeIn 0.8s ease forwards;
-        }
-
-        @keyframes fadeIn {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
         footer {
             text-align: center;
-            padding: 2rem;
-            background-color: var(--primary-color);
-            color: white;
-            font-size: 0.9rem;
+            padding: 3rem 2rem;
+            border-top: 1px solid var(--card-border);
+            color: var(--text-muted);
         }
-
-        footer span {
-            color: var(--accent-color);
-        }
+        footer b { color: var(--primary); }
 
     </style>
 </head>
 <body>
 
-    <header class="hero">
-        <h1>Descubra São Paulo</h1>
-        <p>A selva de pedra esconde segredos fascinantes. Conheça as curiosidades que fazem de São Paulo uma das cidades mais singulares do mundo.</p>
+    <header>
+        <div class="logo">SP</div>
+        <button class="theme-toggle" id="themeToggle" aria-label="Alternar modo claro e escuro">
+            🌙
+        </button>
     </header>
 
-    <main class="container">
-        <section class="grid" id="curiosities-grid">
-            <!-- Os cards serão animados via JavaScript -->
-            <article class="card js-scroll">
-                <div class="card-icon">🍕</div>
-                <h3>A Capital da Pizza</h3>
-                <p>São Paulo é a segunda cidade que mais consome pizza no mundo, perdendo apenas para Nova York. Estima-se que mais de 1 milhão de pizzas são consumidas diariamente na capital paulista.</p>
-            </article>
+    <main>
+        <!-- Seção Hero -->
+        <section class="hero">
+            <h1>Descubra <span>São Paulo</span></h1>
+            <p>Mergulhe em uma experiência interativa pelas histórias e dados mais fascinantes da maior metrópole da América Latina.</p>
+        </section>
 
-            <article class="card js-scroll">
-                <div class="card-icon">⛩️</div>
-                <h3>Pedaço do Japão</h3>
-                <p>O bairro da Liberdade abriga a maior comunidade japonesa fora do Japão. Hoje, o bairro também celebra as ricas culturas chinesa e coreana, sendo um polo gastronômico e cultural asiático.</p>
-            </article>
+        <!-- Seção de Curiosidades -->
+        <section class="container">
+            <div class="grid">
+                
+                <article class="card js-reveal">
+                    <div class="card-content">
+                        <div class="card-icon">🍕</div>
+                        <h3>A Capital da Pizza</h3>
+                        <p>São Paulo consome mais de 1 milhão de pizzas por dia. A forte herança dos imigrantes italianos transformou a cidade na segunda maior consumidora do prato no mundo, atrás apenas de Nova York.</p>
+                    </div>
+                </article>
 
-            <article class="card js-scroll">
-                <div class="card-icon">🚁</div>
-                <h3>Céu Movimentado</h3>
-                <p>São Paulo possui a maior frota de helicópteros do mundo. Devido ao trânsito intenso e alta concentração de executivos, os céus da cidade registram centenas de voos diários.</p>
-            </article>
+                <article class="card js-reveal">
+                    <div class="card-content">
+                        <div class="card-icon">⛩️</div>
+                        <h3>Pedaço da Ásia</h3>
+                        <p>O bairro da Liberdade abriga a maior comunidade japonesa fora do Japão. Hoje, as famosas lanternas suzurantō iluminam também as fortes e vibrantes influências das culturas chinesa e coreana.</p>
+                    </div>
+                </article>
 
-            <article class="card js-scroll">
-                <div class="card-icon">🎨</div>
-                <h3>Museu a Céu Aberto</h3>
-                <p>A arte urbana paulistana é referência mundial. O Beco do Batman, na Vila Madalena, é uma galeria a céu aberto onde os grafites são constantemente renovados por artistas renomados.</p>
-            </article>
+                <article class="card js-reveal">
+                    <div class="card-content">
+                        <div class="card-icon">🚁</div>
+                        <h3>Frota Aérea</h3>
+                        <p>Dona da maior frota de helicópteros do mundo, a cidade conta com mais de 200 helipontos. É o reflexo de um centro financeiro pulsante tentando contornar seu famoso e caótico trânsito.</p>
+                    </div>
+                </article>
 
-            <article class="card js-scroll">
-                <div class="card-icon">☕</div>
-                <h3>Herança do Café</h3>
-                <p>O crescimento monumental da cidade no século XIX e início do século XX foi quase inteiramente financiado pela economia do café. Estações de trem como a da Luz foram erguidas para escoar o grão.</p>
-            </article>
+                <article class="card js-reveal">
+                    <div class="card-content">
+                        <div class="card-icon">🎨</div>
+                        <h3>Museu a Céu Aberto</h3>
+                        <p>A arte urbana respira na Vila Madalena. O Beco do Batman é uma galeria dinâmica, onde artistas do mundo todo disputam os muros para exibir obras efêmeras e genialmente coloridas.</p>
+                    </div>
+                </article>
 
-            <article class="card js-scroll">
-                <div class="card-icon">🚇</div>
-                <h3>Gigante Subterrâneo</h3>
-                <p>Apesar de a rede de metrô não ser a mais extensa, a estação Sé é impressionante: por ela circulam cerca de 600 mil pessoas todos os dias, tornando-a uma das mais movimentadas das Américas.</p>
-            </article>
+                <article class="card js-reveal">
+                    <div class="card-content">
+                        <div class="card-icon">☕</div>
+                        <h3>O Ouro Verde</h3>
+                        <p>A imponência da Estação da Luz e do centro histórico foi financiada pelo café. Até o século XX, a infraestrutura de São Paulo foi inteiramente moldada para escoar o "ouro verde" para o porto de Santos.</p>
+                    </div>
+                </article>
+
+                <article class="card js-reveal">
+                    <div class="card-content">
+                        <div class="card-icon">🌳</div>
+                        <h3>Pulmão Urbano</h3>
+                        <p>O Parque Ibirapuera recebe mais de 14 milhões de visitas anuais. Com projetos de Oscar Niemeyer e paisagismo de Burle Marx, está entre os parques urbanos mais fotografados do planeta.</p>
+                    </div>
+                </article>
+
+            </div>
         </section>
     </main>
 
     <footer>
-        <p>Desenvolvido com <span>♥</span> por um Sênior Front-end Developer.</p>
+        <p>Projetado e desenvolvido por um <b>Senior Front-end Engineer</b>.</p>
     </footer>
 
     <!-- =========================================
-         JAVASCRIPT
+         7. JAVASCRIPT (Lógica de Interação)
          ========================================= -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            // Seleciona todos os elementos que devem ser animados no scroll
-            const scrollElements = document.querySelectorAll('.js-scroll');
+            
+            /* --- LÓGICA DO TEMA DARK/LIGHT --- */
+            const themeToggleBtn = document.getElementById('themeToggle');
+            const currentTheme = localStorage.getItem('theme');
 
-            // Configuração do Intersection Observer
-            const observerOptions = {
-                root: null, // Observa a viewport
-                rootMargin: '0px',
-                threshold: 0.15 // Dispara quando 15% do elemento estiver visível
-            };
+            // Checa memória do navegador ou preferência do sistema operacional
+            if (currentTheme) {
+                document.documentElement.setAttribute('data-theme', currentTheme);
+                updateButtonIcon(currentTheme);
+            } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                updateButtonIcon('dark');
+            }
 
-            const observer = new IntersectionObserver((entries, observer) => {
+            // Ação de clique para trocar o tema
+            themeToggleBtn.addEventListener('click', () => {
+                const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+                const newTheme = isDark ? 'light' : 'dark';
+                
+                document.documentElement.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                updateButtonIcon(newTheme);
+            });
+
+            function updateButtonIcon(theme) {
+                themeToggleBtn.innerHTML = theme === 'dark' ? '☀️' : '🌙';
+            }
+
+            /* --- ANIMAÇÃO DE APARECER NO SCROLL (Intersection Observer) --- */
+            const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
+            const revealObserver = new IntersectionObserver((entries, observer) => {
                 entries.forEach((entry, index) => {
                     if (entry.isIntersecting) {
-                        // Adiciona um pequeno delay baseado no índice para efeito de cascata (stagger)
+                        // Aplica um pequeno atraso matemático (stagger) para não aparecer tudo de uma vez
                         setTimeout(() => {
-                            entry.target.classList.add('fade-in');
+                            entry.target.classList.add('is-visible');
                         }, index * 100);
-                        
-                        // Para de observar o elemento após a animação acontecer uma vez
-                        observer.unobserve(entry.target);
+                        observer.unobserve(entry.target); // Para de observar após animar
                     }
                 });
             }, observerOptions);
 
-            // Inicia a observação de cada card
-            scrollElements.forEach(el => observer.observe(el));
+            // Inicia o observador em todos os cards
+            document.querySelectorAll('.js-reveal').forEach(el => revealObserver.observe(el));
+
+            /* --- EFEITO 3D TILT COM O MOUSE (Apenas Desktop) --- */
+            const cards = document.querySelectorAll('.card');
+            
+            // Só aplica o evento de mouse se o dispositivo tiver um cursor (ignora celulares para melhor performance)
+            if(window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+                cards.forEach(card => {
+                    card.addEventListener('mousemove', (e) => {
+                        const rect = card.getBoundingClientRect();
+                        const x = e.clientX - rect.left;
+                        const y = e.clientY - rect.top;
+                        
+                        const centerX = rect.width / 2;
+                        const centerY = rect.height / 2;
+                        
+                        // Matemática da rotação baseada na posição do mouse
+                        const rotateX = ((y - centerY) / centerY) * -8; 
+                        const rotateY = ((x - centerX) / centerX) * 8;
+                        
+                        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+                        card.style.transition = 'none';
+                    });
+
+                    // Quando o mouse sai, reseta a posição suavemente
+                    card.addEventListener('mouseleave', () => {
+                        card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+                        card.style.transition = 'transform 0.5s ease';
+                    });
+                });
+            }
         });
     </script>
 </body>
